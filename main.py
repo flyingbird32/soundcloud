@@ -3,7 +3,6 @@ from managers.session_manager import SessionManager
 from managers.username_manager import UsernameManager
 from services.username_changer import UsernameChanger
 from clients.soundcloud import SoundCloud
-from utils.logger import log
 
 def load_config(config_path):
     default_config = {
