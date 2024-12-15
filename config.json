@@ -1,0 +1,4 @@
+{
+    "threads": 60,
+    "sleep_time_on_rate_limit": 55
+}

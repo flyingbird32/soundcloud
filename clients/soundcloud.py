@@ -16,7 +16,7 @@ class SoundCloud:
         }
 
         data = '{"city":null,"country_code":null,"first_name":"","last_name":"","description":null,"permalink":"asdfhsdfjsfdgjfdhgk657","username":"32"}'
-        data = data.replace("asdfhsdfjsfdgjfdhgk657", username)
+        data = data.replace("asdfhsdfjsfdgjfdhgk657", username) # must replace Lol
 
         response = requests.put(url, headers=headers, data=data)
         return response
