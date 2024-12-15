@@ -1,7 +1,10 @@
+from utils.logger import log
+
 class UsernameManager:
     def __init__(self, username_file):
         self.username_file = username_file
         self.usernames = self._load_usernames()
+        log(f"loaded {len(self.usernames)} usernames")
 
     def _load_usernames(self):
         try:

@@ -1,6 +1,7 @@
 from threading import Thread, Lock
 import itertools
 import time
+from utils.logger import log
 
 class UsernameChanger:
     def __init__(self, session_manager, username_manager, client, config):
@@ -22,17 +23,17 @@ class UsernameChanger:
         response = self.client.change_username(username, client_id, auth_token)
 
         if response.status_code == 200:
-            print(f"username '{username}' has been claimed on client_id: {client_id}, auth_token: {auth_token}")
+            log(f"[{session_id}] username '{username}' has been claimed on client_id: {client_id}, auth_token: {auth_token}", "claimed")
             self.stop_flag = True
         elif response.status_code == 401:
-            print(f"session {session_id} is invalid (401) and will be removed")
+            log(f"[{session_id}] {auth_token} is invalid (401) and will be removed", "error")
             with self.session_lock:
                 self.sessions = [s for s in self.sessions if s != session]
         elif response.status_code == 429:
-            print(f"session {session_id} hit rate limit (429) -> waiting for {self.rate_limit_sleep_time} seconds")
+            log(f"[{session_id}] hit rate limit (429) -> waiting for {self.rate_limit_sleep_time} seconds")
             time.sleep(self.rate_limit_sleep_time)  
         else:
-            print(f"session {session_id} -> username: {username}, status: {response.status_code}, response: {response.text}")
+            log(f"[{session_id}] -> username: {username}", "attempt")
 
     def _process_session(self, session, session_id):
         threads = []

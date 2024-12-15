@@ -1,9 +1,11 @@
 import json
+from utils.logger import log
 
 class SessionManager:
     def __init__(self, session_file):
         self.session_file = session_file
         self.sessions = self._load_sessions()
+        log(f"loaded {len(self.sessions)} sessions")
 
     def _load_sessions(self):
         try:
