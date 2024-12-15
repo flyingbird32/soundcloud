@@ -28,17 +28,25 @@ class UsernameChanger:
         elif response.status_code == 401:
             log(f"[{session_id}] {auth_token} is invalid (401) and will be removed", "error")
             with self.session_lock:
-                self.sessions = [s for s in self.sessions if s != session]
+                if session in self.sessions: 
+                    self.sessions.remove(session)
+            return "invalid" 
         elif response.status_code == 429:
             log(f"[{session_id}] hit rate limit (429) -> waiting for {self.rate_limit_sleep_time} seconds")
-            time.sleep(self.rate_limit_sleep_time)  
+            time.sleep(self.rate_limit_sleep_time)
         else:
             log(f"[{session_id}] -> username: {username}", "attempt")
+
+        return "valid"
 
     def _process_session(self, session, session_id):
         threads = []
         for username in self.usernames:
             if self.stop_flag:
+                break
+
+            result = self._process_username(session, session_id, username)
+            if result == "invalid": 
                 break
 
             thread = Thread(target=self._process_username, args=(session, session_id, username))
@@ -58,7 +66,7 @@ class UsernameChanger:
             threads = []
             with self.session_lock:
                 snapshot = list(enumerate(self.sessions))
-            
+
             for i, session in snapshot:
                 thread = Thread(target=self._process_session, args=(session, i + 1))
                 threads.append(thread)
