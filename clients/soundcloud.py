@@ -47,8 +47,8 @@ class SoundCloud:
             except (requests.RequestException, requests.Timeout) as e:
                 retries += 1
 
-    def change_username(self, username, client_id, auth_token):
-        url = f"https://api-v2.soundcloud.com/me?client_id={client_id}&app_version=1734100093&app_locale=en"
+    def change_username(self, username, auth_token):
+        url = f"https://api-v2.soundcloud.com/me?client_id=AsIBxSC4kw4QXdGp0vufY0YztIlkRMUc&app_version=1734100093&app_locale=en"
         headers = {
             "Accept": "application/json, text/javascript, */*; q=0.01",
             "Accept-Language": "en-US,en;q=0.7",
@@ -65,8 +65,8 @@ class SoundCloud:
 
         return self._make_request("PUT", url, headers=headers, data=data)
 
-    def check_username(self, username, client_id, auth_token):
-        url = f"https://api-v2.soundcloud.com/resolve?url=https%3A//soundcloud.com/{username}&client_id={client_id}&app_version=1734100093&app_locale=en"
+    def check_username(self, username, auth_token):
+        url = f"https://api-v2.soundcloud.com/resolve?url=https%3A//soundcloud.com/{username}&client_id=AsIBxSC4kw4QXdGp0vufY0YztIlkRMUc&app_version=1734100093&app_locale=en"
         headers = {
             "Accept": "application/json, text/javascript, */*; q=0.01",
             "Accept-Language": "en-US,en;q=0.7",

@@ -1,3 +1,6 @@
 {
-    "threads": 300
+    "threads": 60,
+    "checks_per_session" : 5,
+    "cooldown_after_ratelimit" : 30,
+    "log_attempts" : true
 } 

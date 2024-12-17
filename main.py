@@ -19,7 +19,6 @@ def _main():
         return
     
     client = SoundCloud()
-
     session_manager = SessionManager("sessions.json", client)
     username_manager = UsernameManager("usernames.txt")
 
