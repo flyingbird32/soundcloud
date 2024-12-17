@@ -13,7 +13,7 @@ class UsernameService:
         self.stop_flag = False
         self.session_lock = Lock()
 
-        self.thread_count_per_session = config.get("threads")
+        self.thread_count = config.get("threads")
 
     def _process_username(self, session, session_id, username):
         client_id = session['client_id']
@@ -28,11 +28,11 @@ class UsernameService:
         elif response.status_code == 200:
             log(f"[{session_id}] -> username: {username}", "attempt")
         else:
-            log(f"[{session_id}] -> username: {username}; unknown response: {response.status_code}", "INFO")
+            log(f"[{session_id}] -> username: {username}; unknown response: {response.status_code}", "info")
 
     def _process_session(self, session, session_id):
         while not self.stop_flag:
-            usernames = list(itertools.islice(self.usernames, 20))
+            usernames = list(itertools.islice(self.usernames, self.thread_count))
             threads = []
 
             for username in usernames:
@@ -43,7 +43,7 @@ class UsernameService:
             for thread in threads:
                 thread.join()
 
-            if self.stop_flag or len(usernames) < 20:
+            if self.stop_flag or len(usernames) < self.thread_count:
                 break
 
     def run(self):

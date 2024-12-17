@@ -10,6 +10,7 @@ def log(message, log_type="info"):
     log_levels = {
         "error": ("ERROR", Fore.RED),
         "claimed": ("CLAIMED", Fore.GREEN),
+        "warning": ("WARNING", Fore.MAGENTA),
         "attempt": ("ATTEMPT", Fore.YELLOW),
         "info": ("INFO", Fore.CYAN),
     }

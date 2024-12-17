@@ -3,21 +3,21 @@ from managers.session_manager import SessionManager
 from managers.username_manager import UsernameManager
 from services.username_service import UsernameService
 from clients.soundcloud import SoundCloud
+from utils.logger import log
 
 def load_config(config_path):
-    default_config = {
-        "threads": 60
-    }
-
     try:
         with open(config_path, "r") as config_file:
             return json.load(config_file)
     except (FileNotFoundError, json.JSONDecodeError) as e:
-        print(f"failed to load configuration from {config_path}. using defaults. error: {e}")
-        return default_config
+        return None
 
-if __name__ == "__main__":
+def _main():
     config = load_config("config.json")
+    if config == None:
+        log("failed to load config, please make sure the config is set properly", "error")
+        return
+    
     client = SoundCloud()
 
     session_manager = SessionManager("sessions.json", client)
@@ -25,3 +25,6 @@ if __name__ == "__main__":
 
     changer = UsernameService(session_manager, username_manager, client, config)
     changer.run()
+
+if __name__ == "__main__":
+    _main()

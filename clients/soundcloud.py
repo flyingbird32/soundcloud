@@ -13,7 +13,7 @@ class SoundCloud:
             with open(self.proxies_file, "r") as file:
                 proxies = [line.strip() for line in file if line.strip()]
             if not proxies:
-                log("proxy file is empty", "error")
+                log("proxy file is empty", "warning")
             return proxies
         except Exception as e:
             log(f"failed to load proxies {e}", "error")
