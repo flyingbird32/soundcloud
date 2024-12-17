@@ -15,15 +15,20 @@ my attempt at creating a tool that automates claiming usernames on soundcloud by
 ## installation
 
 1. **clone the repository**:
+   
    ```bash
    git clone https://github.com/flyingbird32/soundcloud.git
    cd soundcloud
    ```
+   
 2. **install dependencies**:
+   
    ```bash
    pip install -r requirements.txt
    ```
+   
 3. **execute the script in the terminal:**
+   
    ```bash
    python main.py
    ```
