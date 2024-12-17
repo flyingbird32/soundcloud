@@ -1,4 +1,4 @@
-#  soundcloud autoclaimer
+#  🌥️ soundcloud autoclaimer
 
 my attempt at creating a tool that automates claiming usernames on soundcloud by repeatedly sending requests to the soundcloud api
 
