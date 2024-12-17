@@ -3,6 +3,7 @@ from managers.session_manager import SessionManager
 from managers.username_manager import UsernameManager
 from services.username_service import UsernameService
 from clients.soundcloud import SoundCloud
+from services.webhook_service import WebhookService
 from utils.logger import log
 
 def load_config(config_path):
@@ -21,8 +22,9 @@ def _main():
     client = SoundCloud()
     session_manager = SessionManager("sessions.json", client)
     username_manager = UsernameManager("usernames.txt")
+    webhook = WebhookService(config)
 
-    changer = UsernameService(session_manager, username_manager, client, config)
+    changer = UsernameService(session_manager, username_manager, client, config, webhook)
     changer.run()
 
 if __name__ == "__main__":

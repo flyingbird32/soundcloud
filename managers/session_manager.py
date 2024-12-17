@@ -1,6 +1,7 @@
 import json
 import os
 from utils.logger import log
+from utils.tools import obfuscate_auth
 
 class SessionManager:
     def __init__(self, session_file, client):
@@ -19,10 +20,10 @@ class SessionManager:
             auth_token = session['auth_token']
             response = client.change_username("cat", auth_token)
             if "Permalink change is not allowed" in response.text:
-                log(f"removing session: {auth_token} from list -> username can't be changed at this moment", "error")
+                log(f"removing session: {obfuscate_auth(auth_token)} from list -> username can't be changed at this moment", "error")
                 sessions_to_remove.append(session)
             elif response.status_code == 401:
-                log(f"removing session: {auth_token} from list -> invalid token", "error")
+                log(f"removing session: {obfuscate_auth(auth_token)} from list -> invalid token", "error")
                 sessions_to_remove.append(session)
 
         for session in sessions_to_remove:

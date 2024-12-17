@@ -1,6 +1,8 @@
 {
-    "threads": 60,
-    "checks_per_session" : 5,
+    "threads": 300,
+    "checks_per_session" : 50,
     "cooldown_after_ratelimit" : 30,
-    "log_attempts" : true
+    "log_attempts" : true,
+    "use_webhook" : false,
+    "webhook_url" : ""
 } 
