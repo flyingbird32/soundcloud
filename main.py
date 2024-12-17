@@ -1,13 +1,12 @@
 import json
 from managers.session_manager import SessionManager
 from managers.username_manager import UsernameManager
-from services.username_changer import UsernameChanger
+from services.username_service import UsernameService
 from clients.soundcloud import SoundCloud
 
 def load_config(config_path):
     default_config = {
-        "threads": 10,
-        "sleep_time_on_rate_limit": 60
+        "threads": 60
     }
 
     try:
@@ -19,10 +18,10 @@ def load_config(config_path):
 
 if __name__ == "__main__":
     config = load_config("config.json")
-
-    session_manager = SessionManager("sessions.json")
-    username_manager = UsernameManager("usernames.txt")
     client = SoundCloud()
 
-    changer = UsernameChanger(session_manager, username_manager, client, config)
+    session_manager = SessionManager("sessions.json", client)
+    username_manager = UsernameManager("usernames.txt")
+
+    changer = UsernameService(session_manager, username_manager, client, config)
     changer.run()
