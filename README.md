@@ -3,7 +3,7 @@
 my attempt at creating a tool that automates claiming usernames on soundcloud by repeatedly sending requests to the soundcloud api
 
 ## preview
-![preview1](https://cdn.discordapp.com/attachments/1316828170573320305/1318685062383931472/preivew.gif?ex=676338aa&is=6761e72a&hm=c683fbf2910c6f66ad7f70b5370f7bdb8108b086bbe99a6a5b4bacb6e218bd63&)
+![preview1](https://raw.githubusercontent.com/flyingbird32/soundcloud/main/images/preivew.gif)
 
 ## features
 - **custom headers**: preconfigured headers to emulate a legitimate browser request.
